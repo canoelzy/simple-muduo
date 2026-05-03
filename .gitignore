@@ -57,6 +57,8 @@ compile_commands.json
 *.log
 *.bak
 *.swp
+*.pid
+*.sock
 
 # vcpkg
 vcpkg_installed/
@@ -67,3 +69,6 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# AI config
+.CLAUDE.md
