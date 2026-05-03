@@ -9,11 +9,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 编译选项
-if(MSVC)
-  add_compile_options(/W4 /WX)
-else()
-  add_compile_options(-Wall -Wextra -Werror -pedantic)
-endif()
+# if(MSVC)
+#   add_compile_options(/W4 /WX)
+# else()
+#   add_compile_options(-Wall -Wextra -Werror -pedantic)
+# endif()
 
 # 头文件目录
 include_directories(${PROJECT_SOURCE_DIR})
@@ -29,9 +29,14 @@ set(SRCS
 # 测试可执行文件
 add_executable(test_bind
  test/bind.cc
+ 
 )
 
 add_executable(test_timefd
  test/timefd.cc
+)
+
+add_executable(test_timewheel
+ test/timewheel.cc
 )
 # target_link_libraries(test_server muduo pthread)
