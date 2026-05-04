@@ -12,15 +12,18 @@ using ReleaseFunc = std::function<void()>;
 class TimerTask {
  public:
   TimerTask(uint64_t id, uint32_t delay, const TaskFunc& cb)
-      : id_(id), timeout_(delay), task_cb_(cb) {}
+      : id_(id), timeout_(delay), task_cb_(cb), canceled_(false) {}
 
   ~TimerTask() {
-    task_cb_();
+    if (canceled_ == false) {
+      task_cb_();
+    }
     release_();
   }
 
   void SetRelease(const ReleaseFunc& cb) { release_ = cb; }
   uint32_t DelayTime() { return timeout_; }
+  void Cancel() { canceled_ = true; }
 
  private:
   uint64_t id_;          // 定时器任务对象ID
@@ -59,8 +62,18 @@ class TimerWheel {
   // 这个函数每秒钟执行一次，相当于秒针往后走一步
   void RunTimerTask() {
     tick_ = (tick_ + 1) % capacity_;
-    wheel_[tick_]
-        .clear();  // 清空指定位置的数组，就会把数组中保存的所有管理定时器对象的shared_ptr释放掉
+    // 清空指定位置的数组，就会把数组中保存的所有管理定时器对象的shared_ptr释放掉
+    wheel_[tick_].clear();
+  }
+
+  void TimerCancel(uint64_t id) {
+    auto it = timers_.find(id);
+    if (it != timers_.end()) {
+      PtrTask pt = it->second.lock();
+      if (pt) {
+        pt->Cancel();
+      }
+    }
   }
 
  private:
