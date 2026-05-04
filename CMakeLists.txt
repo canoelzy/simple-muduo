@@ -27,25 +27,18 @@ set(SRCS
 # add_library(muduo ${SRCS})
 
 # 测试可执行文件
-add_executable(test_bind
- test/bind.cc
- 
+set(TEST_LIST
+  bind
+  timefd
+  timewheel
+  regex
+  request
+  any
 )
 
-add_executable(test_timefd
- test/timefd.cc
-)
-
-add_executable(test_timewheel
- test/timewheel.cc
-)
-
-add_executable(test_regex
- test/regex.cc
-)
-
-add_executable(test_request
- test/request.cc
-)
+# 循环自动生成可执行文件
+foreach(test_name ${TEST_LIST})
+  add_executable(test_${test_name} test/${test_name}.cc)
+endforeach()
 
 # target_link_libraries(test_server muduo pthread)
