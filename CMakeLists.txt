@@ -39,4 +39,13 @@ add_executable(test_timefd
 add_executable(test_timewheel
  test/timewheel.cc
 )
+
+add_executable(test_regex
+ test/regex.cc
+)
+
+add_executable(test_request
+ test/request.cc
+)
+
 # target_link_libraries(test_server muduo pthread)
