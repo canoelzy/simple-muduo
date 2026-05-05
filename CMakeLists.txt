@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(simple-muduo)
 
 # C++ 标准
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -19,12 +19,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories(${PROJECT_SOURCE_DIR})
 
 # 源文件
-set(SRCS
-
+set(LOG_SRCS
+  log/log.h
+  log/log.cc
 )
 
 # 生成静态库
 # add_library(muduo ${SRCS})
+add_library(simple_log ${LOG_SRCS})
 
 # 测试可执行文件
 set(TEST_LIST
@@ -34,6 +36,7 @@ set(TEST_LIST
   regex
   request
   any
+  tlog
 )
 
 # 循环自动生成可执行文件
@@ -41,4 +44,4 @@ foreach(test_name ${TEST_LIST})
   add_executable(test_${test_name} test/${test_name}.cc)
 endforeach()
 
-# target_link_libraries(test_server muduo pthread)
+target_link_libraries(test_tlog simple_log)
