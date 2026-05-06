@@ -150,11 +150,11 @@ class Logger {
 
 #define LOG_IMPL(level, ...) Init()(level, __FILE__, __LINE__, std::format(__VA_ARGS__))
 
-#define DEBUG(...) LOG_IMPL(sim_muduo::LogLevel::LOG_DEBUG, __VA_ARGS__)
-#define INFO(...) LOG_IMPL(sim_muduo::LogLevel::LOG_INFO, __VA_ARGS__)
-#define WARNING(...) LOG_IMPL(sim_muduo::LogLevel::LOG_WARNING, __VA_ARGS__)
-#define ERROR(...) LOG_IMPL(sim_muduo::LogLevel::LOG_ERROR, __VA_ARGS__)
-#define FATAL(...) LOG_IMPL(sim_muduo::LogLevel::LOG_FATAL, __VA_ARGS__)
+#define DEBUG(...) Logger::LOG_IMPL(sim_muduo::LogLevel::LOG_DEBUG, __VA_ARGS__)
+#define INFO(...) Logger::LOG_IMPL(sim_muduo::LogLevel::LOG_INFO, __VA_ARGS__)
+#define WARNING(...) Logger::LOG_IMPL(sim_muduo::LogLevel::LOG_WARNING, __VA_ARGS__)
+#define ERROR(...) Logger::LOG_IMPL(sim_muduo::LogLevel::LOG_ERROR, __VA_ARGS__)
+#define FATAL(...) Logger::LOG_IMPL(sim_muduo::LogLevel::LOG_FATAL, __VA_ARGS__)
 
 }  // namespace sim_muduo
 

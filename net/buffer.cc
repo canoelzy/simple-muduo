@@ -35,7 +35,7 @@ void Buffer::EnsureWriteSpace(uint64_t len) {
     return;
   } else {
     buffer_.resize(write_index_ + len);
-    Logger::WARNING("写入空间不足空间扩大至: {}", buffer_.size());
+    WARNING("写入空间不足空间扩大至: {}", buffer_.size());
   }
 }
 // 写入数据
@@ -44,14 +44,14 @@ void Buffer::Append(const char* data, uint64_t len) {
   // 确保空间足够
   EnsureWriteSpace(len);
   std::copy(data, data + len, WritePosition());
-  Logger::INFO("写入数据: {}", data);
+  INFO("写入数据: {}", data);
   MoveWriteOffset(len);
 }
 // 读取数据
 void Buffer::Retrieve(void* buf, uint64_t len) {
   assert(len <= ReadAbleSize());
   std::copy(ReadPosition(), ReadPosition() + len, static_cast<char*>(buf));
-  Logger::INFO("读取数据: {}", static_cast<char*>(buf));
+  INFO("读取数据: {}", static_cast<char*>(buf));
   MoveReadOffset(len);
 }
 // 查看缓冲区内的数据
